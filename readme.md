@@ -61,7 +61,25 @@ docker run -d --restart=always -p 127.0.0.1:2376:2375 --network jenkins -v /var/
 docker inspect <container_id> | grep IPAddress
 ```
 
+# Creating Clouds and agent templates
+Once the socat container has been built and is running with the above parameters you can go ahead and create a cloud with some agents.
+ - Go to Dashboard > Manage Jenkins > Configure Clouds to view our 'docker' cloud:
+
+ ![alt text](images/cloud.png)
+
+ Click on Docker Agent Templates to view the agent templates. Note, the labels, these will be used when telling Jenkins what jobs we want to be run on.
+
+
 ## Using my Jenkins Python Agent (use this image when configuring the cloud agent)
+The agent container for running our python job can be grabbed from the parent repo:
 ```
-docker pull devopsjourney1/myjenkinsagents:python
+devopsjourney1/myjenkinsagents:python
 ```
+
+## Specifying agents to run specific jobs
+You can explicitly tell Jenkins to run jobs on an agent by the following:
+
+ ![alt text](images/agent.png)
+
+ Just make sure the agent label matches that back in your agent template config.
+
