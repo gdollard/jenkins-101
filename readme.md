@@ -1,4 +1,9 @@
 
+# What's this?
+This repo contains the config for running Jenkins locally in a container. It includes the BlueOcean plugin. It also shows how to run a container with socat which will enable TCP communication between containers and the host. The reason for this is to allow the creation of Jenkins clouds and agents (running as their own containers) all within the host context.
+
+This repo is a fork, to see the original details check out the video below.
+
 ## YouTube Link
 For the full 1 hour course watch out youtube:
 https://www.youtube.com/watch?v=6YZvp2GwT0A
@@ -9,7 +14,7 @@ https://www.youtube.com/watch?v=6YZvp2GwT0A
 docker build -t myjenkins-blueocean:latest .
 ```
 
-## Create the network 'jenkins'
+## Create the network 'jenkins' (if it doesn't already exist)
 ```
 docker network create jenkins
 ```
@@ -42,9 +47,11 @@ https://localhost:8080/
 https://www.jenkins.io/doc/book/installing/docker/
 
 
-## alpine/socat container to forward traffic from Jenkins to Docker Desktop on Host Machine
+## alpine/socat container to forward traffic 
+From Jenkins to Docker Desktop on Host Machine
 
-## Why are we doing this? We want to set up an agent to run jobs, basically we don't want to run jobs on the Master node. So we set up an agent. This agent will run on my own machine (the docker host). But since Jenkins is running in its own container it cannot TCP out to my host so I pulled and ran the alpine/socat image. This image allows us to expose a tcp socket for accessing docker API on macOS. I use the IPAddress of this container process to forward to our Jenkins container. The agent is set up on this socat container. 
+## Why are we doing this? 
+We want to set up an agent to run jobs, basically we don't want to run jobs on the Master node. So we set up an agent. This agent will run on my own machine (the docker host). But since Jenkins is running in its own container it cannot TCP out to my host so I pulled and ran the alpine/socat image. This image allows us to expose a tcp socket for accessing docker API on macOS. I use the IPAddress of this container process to forward to our Jenkins container. The agent is set up on this socat container. 
 
 https://stackoverflow.com/questions/47709208/how-to-find-docker-host-uri-to-be-used-in-jenkins-docker-plugin
 
